@@ -5,6 +5,7 @@ import java.util.List;
 
 import controller.ArticleController;
 import controller.AuthorController;
+import controller.HabitatController;
 import controller.MagazineController;
 import database.ConnectionFactory;
 import model.*;
@@ -145,6 +146,11 @@ public class Main {
         }
         break;
 
+      case 2:
+        System.out.println("2");
+        HabitatController habitatController = new HabitatController(c, entityManagerFactory);
+        habitatController.listHabitats();
+        break;
       default:
         System.out.println("Adeu!!");
         System.exit(1);

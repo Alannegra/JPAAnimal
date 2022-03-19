@@ -5,10 +5,10 @@
         <provider>org.hibernate.ejb.HibernatePersistence</provider>
 
         <properties>
-            <property name="javax.persistence.jdbc.url" value="jdbc:postgresql://192.168.22.136:5432/bioparc"/>
+            <property name="javax.persistence.jdbc.url" value="jdbc:postgresql://192.168.1.46:5432/bioparc"/>
             <property name="javax.persistence.jdbc.driver" value="org.postgresql.Driver"/>
             <property name="javax.persistence.jdbc.user" value="alan"/>
-            <property name="javax.persistence.jdbc.password" value="alan"/>
+            <property name="javax.persistence.jdbc.password" value="usuario"/>
         </properties>
     </persistence-unit>
 </persistence>
