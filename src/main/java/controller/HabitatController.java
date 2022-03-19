@@ -60,7 +60,7 @@ public class HabitatController {
   public void addHabitat(Habitat habitat) {
     EntityManager em = entityManagerFactory.createEntityManager();
     em.getTransaction().begin();
-    Habitat habitatExists = (Habitat) em.find(Habitat.class, habitat.getHabitat());
+    Habitat habitatExists = (Habitat) em.find(Habitat.class, habitat.getHabitatId());
     if (habitatExists == null ){
       //System.out.println("insert habitat");
       em.persist(habitat);
@@ -139,5 +139,7 @@ public class HabitatController {
     }
     return habitats;
   }
+
+
 
 }

@@ -147,7 +147,6 @@ public class Main {
 
       case 3:
 
-
         try {
           List<Habitat> habitats = habitatController.poblarTablaHabitatLeer("src/main/resources/Habitat.csv");
           for (Habitat habitat: habitats) {
@@ -165,7 +164,21 @@ public class Main {
         break;
       case 4:
         animalController.consultaClaseConcreta();
-
+        break;
+      case 5:
+        animalController.consultaOrdenConcreta();
+        break;
+      case 6:
+        animalController.consultaNombreConcreta();
+        break;
+      case 7:
+        animalController.consultaDietaConcreta();
+        break;
+      case 8:
+        animalController.modificarDieta();
+        break;
+      case 9:
+        animalController.modificarOrdenesPorHabitat();
         break;
       default:
         System.out.println("Adeu!!");

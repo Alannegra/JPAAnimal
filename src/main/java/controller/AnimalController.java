@@ -13,6 +13,9 @@ import java.io.Reader;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -80,7 +83,7 @@ public class AnimalController {
   public void listAnimals() {
     EntityManager em = entityManagerFactory.createEntityManager();
     em.getTransaction().begin();
-    List<Animal> result = em.createQuery("from Animal where dieta like '%fruta%'", Animal.class)
+    List<Animal> result = em.createQuery("from Animal", Animal.class)
         .getResultList();
     for (Animal animal : result) {
       System.out.println(animal.toString());
@@ -90,10 +93,36 @@ public class AnimalController {
   }
 
   /* Method to UPDATE activity for an author */
-  public void updateHabitat(Integer animalId) {
+  public void updateAnimalDieta(String animalId) {
     EntityManager em = entityManagerFactory.createEntityManager();
     em.getTransaction().begin();
-    Animal animal = (Animal) em.find(Animal.class, animalId);
+
+    List<Animal> result = em.createQuery("from Animal where nombre='"+animalId+"'", Animal.class).getResultList();
+
+    Animal animal = (Animal) em.find(Animal.class, result.get(0).getNombre());
+    System.out.println("Escribe la nueva dieta del animal: ");
+    String word2 = scanner.nextLine();
+    animal.setDieta(word2);
+    em.merge(animal);
+    em.getTransaction().commit();
+    em.close();
+
+  }
+
+  public void updateAnimalClase(String habitat) {
+    EntityManager em = entityManagerFactory.createEntityManager();
+    em.getTransaction().begin();
+
+    List<Animal> result = em.createQuery("from Animal where habitat='"+habitat+"'", Animal.class).getResultList();
+
+    for (Animal animal:result) {
+       animal = (Animal) em.find(Animal.class, result.get(0).getNombre());
+    }
+
+    Animal animal = (Animal) em.find(Animal.class, result.get(0).getNombre());
+    System.out.println("Escribe la nueva dieta del animal: ");
+    String word2 = scanner.nextLine();
+    animal.setOrden(word2);
     em.merge(animal);
     em.getTransaction().commit();
     em.close();
@@ -146,34 +175,28 @@ public class AnimalController {
     return animals;
   }
 
-  /*public void consultaClase(){
-    ResultSet rs = null;
-    String sql = "SELECT distinct clase FROM animal";
-    try{
-      Statement st = connection.createStatement();
-      rs = st.executeQuery(sql);
-      System.out.print("| ");
-      while (rs.next()) {
-        System.out.print(rs.getString("clase") + " | ");
-      }
-      System.out.println();
-      System.out.println("+----------+-----------+---------+----------+----------+------+");
-
-      rs.close();
-      st.close();
-    }catch (Exception e){
-      System.out.println("ERROR" + e);
+  public void consultaClase(){
+    EntityManager em = entityManagerFactory.createEntityManager();
+    em.getTransaction().begin();
+    List<String> result = em.createQuery("select distinct clase from Animal").getResultList();
+    for (String clase: result) {
+      System.out.print(clase + " | ");
     }
-  }*/
+    System.out.println();
+    System.out.println("+----------+-----------+---------+----------+----------+------+");
+
+
+    em.getTransaction().commit();
+    em.close();
+
+  }
 
   public void consultaClaseConcreta(){
-    //consultaClase();
+    consultaClase();
     System.out.println("Escribe la clase a mostrar: ");
     String word = scanner.nextLine();
     String str = word.toLowerCase();
     String clase = str.substring(0, 1).toUpperCase() + str.substring(1);
-
-
 
     EntityManager em = entityManagerFactory.createEntityManager();
     em.getTransaction().begin();
@@ -181,9 +204,139 @@ public class AnimalController {
             .getResultList();
     animal.toString(result);
 
+    em.getTransaction().commit();
+    em.close();
+  }
+
+  public void consultaOrden() {
+    EntityManager em = entityManagerFactory.createEntityManager();
+    em.getTransaction().begin();
+    List<String> result = em.createQuery("select distinct orden from Animal").getResultList();
+    int cont = 0;
+    for (String orden: result) {
+      if(cont % 5 == 0){
+        System.out.println();
+        System.out.print("| ");
+      }else{
+        System.out.print(orden + " | ");
+      }
+      cont++;
+    }
+    em.getTransaction().commit();
+    em.close();
+
+  }
+
+  public void consultaOrdenConcreta(){
+    consultaOrden();
+    System.out.println("Escribe el orden a mostrar: ");
+    String word = scanner.nextLine();
+    String str = word.toLowerCase();
+    String orden = str.substring(0, 1).toUpperCase() + str.substring(1);
+
+    EntityManager em = entityManagerFactory.createEntityManager();
+    em.getTransaction().begin();
+    List<Animal> result = em.createQuery("from Animal where orden='" + orden + "'", Animal.class)
+            .getResultList();
+    animal.toString(result);
 
     em.getTransaction().commit();
     em.close();
   }
+
+  public void consultaNombreConcreta() {
+    System.out.println("Escribe un numero: ");
+    String word = scanner.nextLine();
+    EntityManager em = entityManagerFactory.createEntityManager();
+    em.getTransaction().begin();
+    List<Animal> result = em.createQuery("from Animal where LENGtH(nombre) <=" + word, Animal.class)
+            .getResultList();
+    animal.toString(result);
+
+    em.getTransaction().commit();
+    em.close();
+  }
+
+  public void consultaDietaConcreta() {
+    System.out.println("|@#|@#|@# EJEMPLOS #@|#@|#@|");
+    System.out.println("- Fruta");
+    System.out.println("- Huevo");
+    System.out.println("- Semilla");
+    System.out.println("- Insecto");
+    System.out.println("- Flor");
+    System.out.println("- Raton");
+    System.out.println("Escribe la palabra a contener: ");
+    String word = scanner.nextLine();
+    String str = word.toLowerCase();
+
+    EntityManager em = entityManagerFactory.createEntityManager();
+    em.getTransaction().begin();
+    List<Animal> result = em.createQuery("from Animal where dieta like '%" + str + "%'", Animal.class)
+            .getResultList();
+    animal.toString2(result);
+    em.getTransaction().commit();
+    em.close();
+  }
+
+  public void consultaNombre(){
+    EntityManager em = entityManagerFactory.createEntityManager();
+    em.getTransaction().begin();
+    List<String> result = em.createQuery("select nombre from Animal").getResultList();
+
+    int i = 1;
+    for (String animal: result) {
+      System.out.println(" | " + i + " | " + animal + " | ");
+      i++;
+    }
+    em.getTransaction().commit();
+    em.close();
+  }
+
+  public void modificarDieta(){
+    consultaNombre();
+    EntityManager em = entityManagerFactory.createEntityManager();
+    em.getTransaction().begin();
+
+    List<String> result = em.createQuery("select nombre from Animal").getResultList();
+    System.out.println("Escribe el numero de la id");
+    String word = scanner.nextLine();
+    String nombre = result.get(Integer.parseInt(word)-1);
+
+    em.getTransaction().commit();
+    em.close();
+    
+    updateAnimalDieta(nombre);
+    /*try {
+      consultaNombre();
+      Statement st = connection.createStatement();
+      System.out.println("Escribe el numero de la id");
+      String word = scanner.nextLine();
+      System.out.println("Escribe el nuevo nombre: ");
+      String word2 = scanner.nextLine();
+      st.executeUpdate("update animal set nombre='" + word2 + "' where id=" + word );
+      st.close();
+
+    } catch (SQLException e) {
+      e.printStackTrace();
+    }*/
+  }
+
+  public void modificarOrdenesPorHabitat() {
+    try {
+      consultaClase();
+      Statement st = connection.createStatement();
+      System.out.println("Escribe el habitat de los animales a modificar: ");
+      String word = scanner.nextLine().toUpperCase();
+      System.out.println("Escribe el orden a modificar: ");
+      String word2 = scanner.nextLine();
+
+      st.executeUpdate("update animal set orden='" + word2 + "' where habitat='" + word + "'");
+      st.close();
+
+    } catch (SQLException e) {
+      e.printStackTrace();
+    }
+  }
+
 
 }

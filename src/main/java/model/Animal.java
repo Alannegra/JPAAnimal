@@ -2,17 +2,20 @@ package model;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.List;
 
 @Entity
 @Access(AccessType.FIELD)
 @Table(name = "animal")
 public class Animal implements Serializable {
-    /*@Id
-    @Column(name = "id")
-    int animalId;*/
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
+    int animalId;
     @Column(name = "nombre")
     String nombre;
     @Column(name = "especie")
@@ -30,7 +33,6 @@ public class Animal implements Serializable {
 
     @Column(name = "habitat")
     String habitat;
-
     @Column(name = "dieta")
     String dieta;
     @Column(name = "gestacion")
@@ -146,7 +148,7 @@ public class Animal implements Serializable {
         this.vida = vida;
     }
 
-    @Override
+
     public void toString(List<Animal> result) {
         System.out.println("|    Nombre     |    Orden   |   Clase   |   Habitat    |   Gestacion   |   Crias   |   Vida    |");
         System.out.println("+---------------+------------+-----------+--------------+---------------+-----------+-----------+");
@@ -158,11 +160,16 @@ public class Animal implements Serializable {
                         " | " + animal.getGestacion() +
                         " | " + animal.getCrias() +
                         " | " + animal.getVida() + " | ");
-
             }
+    }
 
-
-
+    public void toString2(List<Animal> result){
+            System.out.println("|       Nombre       |                         Dieta                         | ");
+            System.out.println("+--------------------+-------------------------------------------------------+");
+        for (Animal animal : result) {
+            System.out.println("| " + animal.getNombre() +
+                    " | " + animal.getDieta() + " | ");
+        }
     }
 }
 

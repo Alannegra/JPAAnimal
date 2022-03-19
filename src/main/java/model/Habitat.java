@@ -11,6 +11,7 @@ public class Habitat implements Serializable {
 
     /*@Column(name = "id")
     int habitatId;*/
+
     @Id
     @Column(name = "habitat")
     String habitat;
