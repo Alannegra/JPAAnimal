@@ -3,10 +3,7 @@ import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.List;
 
-import controller.ArticleController;
-import controller.AuthorController;
-import controller.HabitatController;
-import controller.MagazineController;
+import controller.*;
 import database.ConnectionFactory;
 import model.*;
 import org.hibernate.HibernateException;
@@ -82,6 +79,8 @@ public class Main {
     Menu menu = new Menu();
     int opcio;
     opcio = menu.mainMenu();
+    HabitatController habitatController = new HabitatController(c, entityManagerFactory);
+    AnimalController animalController = new AnimalController(c,entityManagerFactory);
 
     switch (opcio) {
 
@@ -146,13 +145,32 @@ public class Main {
         }
         break;
 
-      case 2:
-        System.out.println("2");
-        HabitatController habitatController = new HabitatController(c, entityManagerFactory);
-        habitatController.listHabitats();
+      case 3:
+
+
+        try {
+          List<Habitat> habitats = habitatController.poblarTablaHabitatLeer("src/main/resources/Habitat.csv");
+          for (Habitat habitat: habitats) {
+            habitatController.addHabitat(habitat);
+          }
+          List<Animal> animals = animalController.poblarTablaAnimalLeer("src/main/resources/Animal.csv");
+          for (Animal animal: animals) {
+            animalController.addAnimal(animal);
+          }
+
+        } catch (IOException e) {
+          e.printStackTrace();
+        }
+
+        break;
+      case 4:
+        animalController.consultaClaseConcreta();
+
         break;
       default:
         System.out.println("Adeu!!");
+        habitatController.listHabitats();
+        animalController.listAnimals();
         System.exit(1);
         break;
 

@@ -8,16 +8,17 @@ import java.io.Serializable;
 @Table(name = "habitat")
 
 public class Habitat implements Serializable {
+
+    /*@Column(name = "id")
+    int habitatId;*/
     @Id
-    @Column(name = "id")
-    int habitatId;
     @Column(name = "habitat")
     String habitat;
     @Column(name = "description")
     String description;
 
-    public Habitat(int habitatId, String habitat, String description) {
-        this.habitatId = habitatId;
+    public Habitat(String habitat, String description) {
+        //this.habitatId = habitatId;
         this.habitat = habitat;
         this.description = description;
     }
@@ -25,13 +26,13 @@ public class Habitat implements Serializable {
     public Habitat() {
     }
 
-    public int getHabitatId() {
+    /*public int getHabitatId() {
         return habitatId;
     }
 
     public void setHabitatId(int habitatId) {
         this.habitatId = habitatId;
-    }
+    }*/
 
     public String getHabitat() {
         return habitat;
@@ -52,7 +53,6 @@ public class Habitat implements Serializable {
     @Override
     public String toString() {
         return "Habitat{" +
-                "habitatId=" + habitatId +
                 ", habitat='" + habitat + '\'' +
                 ", description='" + description + '\'' +
                 '}';

@@ -2,14 +2,17 @@ package model;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.List;
 
 @Entity
 @Access(AccessType.FIELD)
 @Table(name = "animal")
 public class Animal implements Serializable {
-    @Id
+    /*@Id
     @Column(name = "id")
-    int animalId;
+    int animalId;*/
+
+    @Id
     @Column(name = "nombre")
     String nombre;
     @Column(name = "especie")
@@ -21,9 +24,12 @@ public class Animal implements Serializable {
     @Column(name = "clase")
     String clase;
 
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    /*@ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "habitat")
-    public Habitat habitat;
+    public Habitat habitat;*/
+
+    @Column(name = "habitat")
+    String habitat;
 
     @Column(name = "dieta")
     String dieta;
@@ -34,8 +40,8 @@ public class Animal implements Serializable {
     @Column(name = "vida")
     String vida ;
 
-    public Animal(int animalId, String nombre, String especie, String familia, String orden, String clase, Habitat habitat, String dieta, String gestacion, String crias, String vida) {
-        this.animalId = animalId;
+    public Animal(String nombre, String especie, String familia, String orden, String clase, String habitat, String dieta, String gestacion, String crias, String vida) {
+        /*this.animalId = animalId;*/
         this.nombre = nombre;
         this.especie = especie;
         this.familia = familia;
@@ -52,13 +58,13 @@ public class Animal implements Serializable {
 
     }
 
-    public int getAnimalId() {
+    /*public int getAnimalId() {
         return animalId;
     }
 
     public void setAnimalId(int animalId) {
         this.animalId = animalId;
-    }
+    }*/
 
     public String getNombre() {
         return nombre;
@@ -100,11 +106,11 @@ public class Animal implements Serializable {
         this.clase = clase;
     }
 
-    public Habitat getHabitat() {
+    public String getHabitat() {
         return habitat;
     }
 
-    public void setHabitat(Habitat habitat) {
+    public void setHabitat(String habitat) {
         this.habitat = habitat;
     }
 
@@ -141,20 +147,22 @@ public class Animal implements Serializable {
     }
 
     @Override
-    public String toString() {
-        return "Animal{" +
-                "animalId=" + animalId +
-                ", nombre='" + nombre + '\'' +
-                ", especie='" + especie + '\'' +
-                ", familia='" + familia + '\'' +
-                ", orden='" + orden + '\'' +
-                ", clase='" + clase + '\'' +
-                ", habitat='" + habitat + '\'' +
-                ", dieta='" + dieta + '\'' +
-                ", gestacion='" + gestacion + '\'' +
-                ", crias='" + crias + '\'' +
-                ", vida='" + vida + '\'' +
-                '}';
+    public void toString(List<Animal> result) {
+        System.out.println("|    Nombre     |    Orden   |   Clase   |   Habitat    |   Gestacion   |   Crias   |   Vida    |");
+        System.out.println("+---------------+------------+-----------+--------------+---------------+-----------+-----------+");
+            for (Animal animal : result) {
+                System.out.println("| " + animal.getNombre() +
+                        " | " + animal.getOrden() +
+                        " | " + animal.getClase() +
+                        " | " + animal.getHabitat() +
+                        " | " + animal.getGestacion() +
+                        " | " + animal.getCrias() +
+                        " | " + animal.getVida() + " | ");
+
+            }
+
+
+
     }
 }
 
