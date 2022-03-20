@@ -69,11 +69,11 @@ public class AnimalController {
   public void addAnimal(Animal animal) {
     EntityManager em = entityManagerFactory.createEntityManager();
     em.getTransaction().begin();
-    Animal animalExists = (Animal) em.find(Animal.class, animal.getNombre());
-    if (animalExists == null ){
+   //Animal animalExists = (Animal) em.find(Animal.class, animal.getNombre());
+    //if (animalExists == null ){
       //System.out.println("insert animal");
       em.persist(animal);
-    }
+    //}
     em.getTransaction().commit();
     em.close();
   }
@@ -93,13 +93,13 @@ public class AnimalController {
   }
 
   /* Method to UPDATE activity for an author */
-  public void updateAnimalDieta(String animalId) {
+  public void updateAnimalDieta(int animalId) {
     EntityManager em = entityManagerFactory.createEntityManager();
     em.getTransaction().begin();
 
-    List<Animal> result = em.createQuery("from Animal where nombre='"+animalId+"'", Animal.class).getResultList();
+    //List<Animal> result = em.createQuery("from Animal where animalId="+animalId+"", Animal.class).getResultList();
 
-    Animal animal = (Animal) em.find(Animal.class, result.get(0).getNombre());
+    Animal animal = (Animal) em.find(Animal.class, animalId);
     System.out.println("Escribe la nueva dieta del animal: ");
     String word2 = scanner.nextLine();
     animal.setDieta(word2);
@@ -115,15 +115,18 @@ public class AnimalController {
 
     List<Animal> result = em.createQuery("from Animal where habitat='"+habitat+"'", Animal.class).getResultList();
 
-    for (Animal animal:result) {
-       animal = (Animal) em.find(Animal.class, result.get(0).getNombre());
+    System.out.println("Escribe la clase del animal");
+    String word2 = scanner.nextLine();
+
+
+
+    for (Animal animal :result) {
+
+      animal.setClase(word2);
+      em.merge(animal);
     }
 
-    Animal animal = (Animal) em.find(Animal.class, result.get(0).getNombre());
-    System.out.println("Escribe la nueva dieta del animal: ");
-    String word2 = scanner.nextLine();
-    animal.setOrden(word2);
-    em.merge(animal);
+
     em.getTransaction().commit();
     em.close();
   }
@@ -305,7 +308,7 @@ public class AnimalController {
     em.getTransaction().commit();
     em.close();
     
-    updateAnimalDieta(nombre);
+    updateAnimalDieta(Integer.parseInt(word));
     /*try {
       consultaNombre();
       Statement st = connection.createStatement();
@@ -321,22 +324,23 @@ public class AnimalController {
     }*/
   }
 
-  public void modificarOrdenesPorHabitat() {
-    try {
-      consultaClase();
-      Statement st = connection.createStatement();
-      System.out.println("Escribe el habitat de los animales a modificar: ");
-      String word = scanner.nextLine().toUpperCase();
-      System.out.println("Escribe el orden a modificar: ");
-      String word2 = scanner.nextLine();
+  public void modificarClasesPorHabitat() {
+    EntityManager em = entityManagerFactory.createEntityManager();
+    em.getTransaction().begin();
 
-      st.executeUpdate("update animal set orden='" + word2 + "' where habitat='" + word + "'");
-      st.close();
+    System.out.println("Escribe el habitat de los animales a modificar: ");
+    String word = scanner.nextLine().toUpperCase();
 
-    } catch (SQLException e) {
-      e.printStackTrace();
-    }
+    List<String> result = em.createQuery("select nombre from Animal").getResultList();
+
+
+    em.getTransaction().commit();
+    em.close();
+
+    updateAnimalClase(word);
   }
+
+
 
 
 }

@@ -16,6 +16,7 @@ public class Animal implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     int animalId;
+
     @Column(name = "nombre")
     String nombre;
     @Column(name = "especie")
@@ -60,13 +61,13 @@ public class Animal implements Serializable {
 
     }
 
-    /*public int getAnimalId() {
+    public int getAnimalId() {
         return animalId;
     }
 
     public void setAnimalId(int animalId) {
         this.animalId = animalId;
-    }*/
+    }
 
     public String getNombre() {
         return nombre;

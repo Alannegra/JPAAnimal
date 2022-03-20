@@ -9,6 +9,8 @@
             <property name="javax.persistence.jdbc.driver" value="org.postgresql.Driver"/>
             <property name="javax.persistence.jdbc.user" value="alan"/>
             <property name="javax.persistence.jdbc.password" value="usuario"/>
+            <!--<property name="javax.persistence.schema-generation.database.action" value="drop-and-create"/>
+            <property name="javax.persistence.sql-load-script-source" value="table-records.sql"/>-->
         </properties>
     </persistence-unit>
 </persistence>

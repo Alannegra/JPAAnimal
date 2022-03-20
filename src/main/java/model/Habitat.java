@@ -2,6 +2,7 @@ package model;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.List;
 
 @Entity
 @Access(AccessType.FIELD)
@@ -9,10 +10,11 @@ import java.io.Serializable;
 
 public class Habitat implements Serializable {
 
-    /*@Column(name = "id")
-    int habitatId;*/
-
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
+    int habitatId;
+
     @Column(name = "habitat")
     String habitat;
     @Column(name = "description")
@@ -27,13 +29,13 @@ public class Habitat implements Serializable {
     public Habitat() {
     }
 
-    /*public int getHabitatId() {
+    public int getHabitatId() {
         return habitatId;
     }
 
     public void setHabitatId(int habitatId) {
         this.habitatId = habitatId;
-    }*/
+    }
 
     public String getHabitat() {
         return habitat;
@@ -51,11 +53,13 @@ public class Habitat implements Serializable {
         this.description = description;
     }
 
-    @Override
-    public String toString() {
-        return "Habitat{" +
-                ", habitat='" + habitat + '\'' +
-                ", description='" + description + '\'' +
-                '}';
+
+    public void toString(List<Habitat> result) {
+        System.out.print("| ");
+        for (Habitat habitat:result) {
+            System.out.print(habitat.getHabitat() + " | ");
+        }
+        System.out.println();
+        System.out.println("+----------------------------------------+-----------------+-------------------+--------------------+");
     }
 }

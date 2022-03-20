@@ -22,7 +22,7 @@ public class HabitatController {
   public HabitatController(Connection connection) {
     this.connection = connection;
   }
-
+  Habitat habitat = new Habitat();
   public HabitatController(Connection connection, EntityManagerFactory entityManagerFactory) {
     this.connection = connection;
     this.entityManagerFactory = entityManagerFactory;
@@ -60,11 +60,11 @@ public class HabitatController {
   public void addHabitat(Habitat habitat) {
     EntityManager em = entityManagerFactory.createEntityManager();
     em.getTransaction().begin();
-    Habitat habitatExists = (Habitat) em.find(Habitat.class, habitat.getHabitatId());
-    if (habitatExists == null ){
+    //Habitat habitatExists = (Habitat) em.find(Habitat.class, habitat.getHabitat());
+    //if (habitatExists == null ){
       //System.out.println("insert habitat");
       em.persist(habitat);
-    }
+    //}
     em.getTransaction().commit();
     em.close();
   }
@@ -141,5 +141,12 @@ public class HabitatController {
   }
 
 
-
+  public void consultaHabitat() {
+    EntityManager em = entityManagerFactory.createEntityManager();
+    em.getTransaction().begin();
+    List<Habitat> result = em.createQuery("from Habitat", Habitat.class).getResultList();
+    habitat.toString(result);
+    em.getTransaction().commit();
+    em.close();
+  }
 }
