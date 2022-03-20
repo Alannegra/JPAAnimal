@@ -72,7 +72,12 @@ public class AnimalController {
    //Animal animalExists = (Animal) em.find(Animal.class, animal.getNombre());
     //if (animalExists == null ){
       //System.out.println("insert animal");
+
+    try{
       em.persist(animal);
+    }catch (Exception e){
+
+    }
     //}
     em.getTransaction().commit();
     em.close();
@@ -132,11 +137,32 @@ public class AnimalController {
   }
 
   /* Method to DELETE an Author from the records */
-  public void deleteHabitat(Integer habitatId) {
+  public void deleteAnimal() {
+    consultaNombre();
+    System.out.println("Escribe el numero de la id");
+    String animalId = scanner.nextLine();
+
     EntityManager em = entityManagerFactory.createEntityManager();
     em.getTransaction().begin();
-    Habitat habitat = (Habitat) em.find(Habitat.class, habitatId);
-    em.remove(habitat);
+    Animal animal = (Animal) em.find(Animal.class, Integer.parseInt(animalId));
+    em.remove(animal);
+    em.getTransaction().commit();
+    em.close();
+  }
+
+  public void deleteAnimalForeveryClase() {
+    consultaClase();
+    System.out.println("Escribe la clase a eliminar: ");
+    String clase = scanner.nextLine();
+
+    EntityManager em = entityManagerFactory.createEntityManager();
+    em.getTransaction().begin();
+    List<Animal> result = em.createQuery("from Animal where clase='"+clase+"'", Animal.class).getResultList();
+
+    for (Animal animal :result) {
+      em.remove(animal);
+    }
+
     em.getTransaction().commit();
     em.close();
   }
@@ -182,6 +208,7 @@ public class AnimalController {
     EntityManager em = entityManagerFactory.createEntityManager();
     em.getTransaction().begin();
     List<String> result = em.createQuery("select distinct clase from Animal").getResultList();
+    System.out.print(" | ");
     for (String clase: result) {
       System.out.print(clase + " | ");
     }
@@ -284,12 +311,13 @@ public class AnimalController {
   public void consultaNombre(){
     EntityManager em = entityManagerFactory.createEntityManager();
     em.getTransaction().begin();
-    List<String> result = em.createQuery("select nombre from Animal").getResultList();
+    List<Animal> result = em.createQuery("from Animal").getResultList();
 
-    int i = 1;
-    for (String animal: result) {
-      System.out.println(" | " + i + " | " + animal + " | ");
-      i++;
+    System.out.println("|    id     |    Nombre   |");
+    System.out.println("+-----------+-------------+");
+    for (Animal animal: result) {
+      System.out.println(" | " + animal.getAnimalId() + " | " + animal.getNombre() + " | ");
+
     }
     em.getTransaction().commit();
     em.close();

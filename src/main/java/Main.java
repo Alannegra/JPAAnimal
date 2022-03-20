@@ -171,6 +171,12 @@ public class Main {
           habitatController.consultaHabitat();
           animalController.modificarClasesPorHabitat();
           break;
+        case 10:
+          animalController.deleteAnimal();
+          break;
+        case 11:
+          animalController.deleteAnimalForeveryClase();
+          break;
         default:
           System.out.println("Adeu!!");
           habitatController.listHabitats();

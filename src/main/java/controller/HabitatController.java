@@ -63,7 +63,12 @@ public class HabitatController {
     //Habitat habitatExists = (Habitat) em.find(Habitat.class, habitat.getHabitat());
     //if (habitatExists == null ){
       //System.out.println("insert habitat");
+    try{
       em.persist(habitat);
+    }catch (Exception e){
+
+    }
+
     //}
     em.getTransaction().commit();
     em.close();
