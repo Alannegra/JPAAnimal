@@ -7,9 +7,14 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.List;
 
+
 @Entity
 @Access(AccessType.FIELD)
 @Table(name = "animal")
+
+/**
+ * Clase Animal: Se encarga de crear el objeto de la tabla animal con los distintos datos de cada Animal en la base de datos.
+ */
 public class Animal implements Serializable {
 
     @Id
@@ -43,6 +48,10 @@ public class Animal implements Serializable {
     @Column(name = "vida")
     String vida ;
 
+
+    /**
+     * Constructor Animal: Se encarga de construir la clase de cada Animal.
+     */
     public Animal(String nombre, String especie, String familia, String orden, String clase, String habitat, String dieta, String gestacion, String crias, String vida) {
         /*this.animalId = animalId;*/
         this.nombre = nombre;
@@ -150,6 +159,10 @@ public class Animal implements Serializable {
     }
 
 
+    /**
+     * Metodo toString: Se encarga de mostrar por el terminal la lista de animales de una forma muy visual.
+     * @param result Lista de Animales para recorrerla.
+     */
     public void toString(List<Animal> result) {
         System.out.println("|    Nombre     |    Orden   |   Clase   |   Habitat    |   Gestacion   |   Crias   |   Vida    |");
         System.out.println("+---------------+------------+-----------+--------------+---------------+-----------+-----------+");
@@ -164,6 +177,10 @@ public class Animal implements Serializable {
             }
     }
 
+    /**
+     * Metodo toString2: Se encarga de mostrar por el terminal la lista de animales de una forma muy visual.
+     * @param result Lista de Animales para recorrerla.
+     */
     public void toString2(List<Animal> result){
             System.out.println("|       Nombre       |                         Dieta                         | ");
             System.out.println("+--------------------+-------------------------------------------------------+");

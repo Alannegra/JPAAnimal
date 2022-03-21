@@ -7,6 +7,9 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.Properties;
 
+/**
+ * Clase ConnectionFactory: Se encarga de conectarse a la base de datos gracias al archivo db.properties.
+ */
 public class ConnectionFactory {
     // init database constants
     private static final String DATABASE_DRIVER = "org.postgresql.Driver";

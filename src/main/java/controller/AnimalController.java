@@ -21,6 +21,9 @@ import java.util.List;
 import java.util.Scanner;
 import java.util.StringTokenizer;
 
+/**
+ * Clase AnimalController: Se encarga de controlar la tabla Animal en la base de datos.
+ */
 public class AnimalController {
 
   private Connection connection;
@@ -32,47 +35,26 @@ public class AnimalController {
   Animal animal = new Animal();
   Scanner scanner = new Scanner(System.in);
 
+  /**
+   * Constructor AnimalController: Se encarga de construir la clase.
+   * @param connection Conexión a la base de datos
+   * @param entityManagerFactory EntityManager se usa para crear y eliminar instancias de entidades persistentes, para buscar entidades por su clave principal y para consultar entidades.
+   */
   public AnimalController(Connection connection, EntityManagerFactory entityManagerFactory) {
     this.connection = connection;
     this.entityManagerFactory = entityManagerFactory;
   }
 
-  public List<Habitat> readHabitatsFile23213(String filename) throws IOException {
-    int id;
-    String habitat, description;
-    List<Habitat> habitatsList= new ArrayList<Habitat>();
-
-    BufferedReader br = new BufferedReader(new FileReader(filename));
-    String linea = "";
-    while ((linea = br.readLine()) != null) {
-
-      StringTokenizer str = new StringTokenizer(linea, ",");
-      id = Integer.parseInt(str.nextToken());
-      habitat = str.nextToken();
-      description = str.nextToken();
-
-      habitatsList.add(new Habitat( habitat, description));
-
-    }
-    br.close();
-
-    return habitatsList;
-  }
-
-  public void printAnimals(ArrayList<Animal> animalsList) {
-    for (int i = 0; i < animalsList.size(); i++) {
-      System.out.println(animalsList.get(i).toString());
-    }
-  }
-
-  /* Method to CREATE an Autor in the database */
+  /**
+   * Metodo addAnimal: Se encarga de crear un Animal en la base de datos
+   * @param animal Animal con todos sus datos descritos en su modelo clase Animal
+   */
   public void addAnimal(Animal animal) {
     EntityManager em = entityManagerFactory.createEntityManager();
     em.getTransaction().begin();
    //Animal animalExists = (Animal) em.find(Animal.class, animal.getNombre());
     //if (animalExists == null ){
       //System.out.println("insert animal");
-
     try{
       em.persist(animal);
     }catch (Exception e){
@@ -83,8 +65,9 @@ public class AnimalController {
     em.close();
   }
 
-
-  /* Method to READ all Autors */
+  /**
+   * Metodo listAnimals: Se encarga de mostrar por terminal un listado de la tabla animal de la base de datos.
+   */
   public void listAnimals() {
     EntityManager em = entityManagerFactory.createEntityManager();
     em.getTransaction().begin();
@@ -97,7 +80,10 @@ public class AnimalController {
     em.close();
   }
 
-  /* Method to UPDATE activity for an author */
+  /**
+   * Metodo updateAnimalDieta: Se encarga de brindarnos la posibilidad de modificar por terminal la dieta del animal deseado, escribiendo en el terminal el id del animal conectandose previamente a la base de datos.
+   * @param animalId Int que indica la id del animal.
+   */
   public void updateAnimalDieta(int animalId) {
     EntityManager em = entityManagerFactory.createEntityManager();
     em.getTransaction().begin();
@@ -114,6 +100,10 @@ public class AnimalController {
 
   }
 
+  /**
+   * Metodo updateAnimalClase: Se encarga de brindarnos la posibilidad de modificar por terminal la clase de todos los animales selecionados, escribiendo en el terminal el id del animal conectandose previamente a la base de datos.
+   * @param habitat String que indica el habitat de los animales a modificar.
+   */
   public void updateAnimalClase(String habitat) {
     EntityManager em = entityManagerFactory.createEntityManager();
     em.getTransaction().begin();
@@ -136,7 +126,9 @@ public class AnimalController {
     em.close();
   }
 
-  /* Method to DELETE an Author from the records */
+  /**
+   * Metodo deleteAnimal: Se encarga de brindarnos la posibilidad de eliminar por terminal un animal deseado escribiendo en el terminal el id del animal conectandose previamente a la base de datos.
+   */
   public void deleteAnimal() {
     consultaNombre();
     System.out.println("Escribe el numero de la id");
@@ -150,11 +142,14 @@ public class AnimalController {
     em.close();
   }
 
+  /**
+   * Metodo eliminarAnimalesPorClase: Se encarga de brindarnos la posibilidad de eliminar por terminal todos los animales deseados escribiendo en el terminal la clase del animal conectandose previamente a la base de datos.
+   */
   public void deleteAnimalForeveryClase() {
     consultaClase();
     System.out.println("Escribe la clase a eliminar: ");
-    String clase = scanner.nextLine();
-
+    String str = scanner.nextLine();
+    String clase = str.substring(0, 1).toUpperCase() + str.substring(1);
     EntityManager em = entityManagerFactory.createEntityManager();
     em.getTransaction().begin();
     List<Animal> result = em.createQuery("from Animal where clase='"+clase+"'", Animal.class).getResultList();
@@ -167,7 +162,10 @@ public class AnimalController {
     em.close();
   }
 
-
+  /**
+   * Metodo poblarTablaAnimalLeer: Se encarga de poblar la tabla Animal y mostrar el nombre de los animales poblados en la base de datos.
+   * @param filename String con ruta al archivo .csv
+   */
   public List<Animal> poblarTablaAnimalLeer(String filename) throws IOException {
     int num = 0 ;
     List<Animal> animals = new ArrayList<>();
@@ -182,7 +180,6 @@ public class AnimalController {
       while ((line = csvReader.readNext()) != null) {
         if(num > 0){
           list.add(line);
-          //String sql = "INSERT INTO habitat (habitat,description) VALUES (?,?)";
           animals.add(new Animal(line[0],line[1],line[2],line[3],line[4],line[5],line[6],line[7],line[8],line[9]));
         }
         num++;
@@ -204,6 +201,9 @@ public class AnimalController {
     return animals;
   }
 
+  /**
+   * Metodo consultaClase: Se encarga de mostrar por terminal las clases disponibles conectandose previamente a la base de datos.
+   */
   public void consultaClase(){
     EntityManager em = entityManagerFactory.createEntityManager();
     em.getTransaction().begin();
@@ -220,7 +220,9 @@ public class AnimalController {
     em.close();
 
   }
-
+  /**
+   * Metodo consultaClaseConcreta: Se encarga de mostrar por terminal la consulta deseada escribiendo en el terminal previamente la clase del animal conectandose previamente a la base de datos.
+   */
   public void consultaClaseConcreta(){
     consultaClase();
     System.out.println("Escribe la clase a mostrar: ");
@@ -237,7 +239,9 @@ public class AnimalController {
     em.getTransaction().commit();
     em.close();
   }
-
+  /**
+   * Metodo consultaOrden: Se encarga de mostrar por terminal los ordenes disponibles conectandose previamente a la base de datos.
+   */
   public void consultaOrden() {
     EntityManager em = entityManagerFactory.createEntityManager();
     em.getTransaction().begin();
@@ -256,7 +260,9 @@ public class AnimalController {
     em.close();
 
   }
-
+  /**
+   * Metodo consultaOrdenConcreta: Se encarga de mostrar por terminal la consulta deseada escribiendo en el terminal previamente el orden del animal conectandose previamente a la base de datos.
+   */
   public void consultaOrdenConcreta(){
     consultaOrden();
     System.out.println("Escribe el orden a mostrar: ");
@@ -274,6 +280,9 @@ public class AnimalController {
     em.close();
   }
 
+  /**
+   * Metodo consultaNombreConcreta: Se encarga de mostrar por terminal la consulta deseada escribiendo en el terminal previamente la id del animal conectandose previamente a la base de datos.
+   */
   public void consultaNombreConcreta() {
     System.out.println("Escribe un numero: ");
     String word = scanner.nextLine();
@@ -287,6 +296,9 @@ public class AnimalController {
     em.close();
   }
 
+  /**
+   * Metodo consultaDietaConcreta: Se encarga de mostrar por terminal la consulta deseada escribiendo en el terminal previamente la dieta del animal a buscar conectandose previamente a la base de datos.
+   */
   public void consultaDietaConcreta() {
     System.out.println("|@#|@#|@# EJEMPLOS #@|#@|#@|");
     System.out.println("- Fruta");
@@ -308,6 +320,9 @@ public class AnimalController {
     em.close();
   }
 
+  /**
+   * Metodo consultaNombre: Se encarga de mostrar por terminal las ids y nombres de todos los animales disponibles conectandose previamente a la base de datos.
+   */
   public void consultaNombre(){
     EntityManager em = entityManagerFactory.createEntityManager();
     em.getTransaction().begin();
@@ -323,6 +338,9 @@ public class AnimalController {
     em.close();
   }
 
+  /**
+   * Metodo modificarDieta: Se encarga de llamar al metodo updateAnimalDieta al cual le pasamos un parametro que sera la id del animal.
+   */
   public void modificarDieta(){
     consultaNombre();
     EntityManager em = entityManagerFactory.createEntityManager();
@@ -337,21 +355,12 @@ public class AnimalController {
     em.close();
     
     updateAnimalDieta(Integer.parseInt(word));
-    /*try {
-      consultaNombre();
-      Statement st = connection.createStatement();
-      System.out.println("Escribe el numero de la id");
-      String word = scanner.nextLine();
-      System.out.println("Escribe el nuevo nombre: ");
-      String word2 = scanner.nextLine();
-      st.executeUpdate("update animal set nombre='" + word2 + "' where id=" + word );
-      st.close();
 
-    } catch (SQLException e) {
-      e.printStackTrace();
-    }*/
   }
 
+  /**
+   * Metodo modificarClasesPorHabitat: Se encarga de llamar al metodo updateAnimalClase al cual le pasamos el habitat que sera el habitat de los animales a modificar.
+   */
   public void modificarClasesPorHabitat() {
     EntityManager em = entityManagerFactory.createEntityManager();
     em.getTransaction().begin();
@@ -367,8 +376,5 @@ public class AnimalController {
 
     updateAnimalClase(word);
   }
-
-
-
 
 }

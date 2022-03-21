@@ -19,7 +19,9 @@ import view.Menu;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 
-
+/**
+ * Clase Main: Se encarga de manejar el panel de control gracias al switch con todas sus opciones.
+ */
 public class Main {
 
   static SessionFactory sessionFactoryObj;
@@ -41,7 +43,7 @@ public class Main {
   public static EntityManagerFactory createEntityManagerFactory(){
     EntityManagerFactory emf;
     try {
-      emf = Persistence.createEntityManagerFactory("JPAMagazines");
+      emf = Persistence.createEntityManagerFactory("Bioparc");
     } catch (Throwable ex) {
       System.err.println("Failed to create EntityManagerFactory object."+ ex);
       throw new ExceptionInInitializerError(ex);
@@ -50,7 +52,6 @@ public class Main {
   }
 
   public static void main(String[] args) {
-    ArrayList<Magazine> revistes = new ArrayList();
 
     ConnectionFactory connectionFactory = ConnectionFactory.getInstance();
     Connection c = connectionFactory.connect();
@@ -59,10 +60,6 @@ public class Main {
     EntityManagerFactory entityManagerFactory = createEntityManagerFactory();
     //sessionObj = buildSessionFactory().openSession();
 
-
-    AuthorController authorController = new AuthorController(c, entityManagerFactory);
-    ArticleController articleController = new ArticleController(c, entityManagerFactory);
-    MagazineController magazineController = new MagazineController(c, entityManagerFactory);
 
     Menu menu = new Menu();
 
@@ -73,67 +70,6 @@ public class Main {
     int opcio = menu.mainMenu();
     while (opcio > 0 && opcio < 12) {
       switch (opcio) {
-
-        case 1:
-
-          System.out.println("1!!");
-          //try {
-
-            // authorController.printAutors(authorController.readAuthorsFile("src/main/resources/autors.txt"));
-            //
-
-            // for (Author a : authors) {
-            //   authorController.addAuthor(a);
-            // }
-
-            // magazineController.printMagazines(magazineController.readMagazinesFile("src/main/resources/revistes.txt"));
-            // magazineController.printMagazines();
-
-            /*List<Author> authors = authorController.readAuthorsFile("src/main/resources/autors.txt");
-            List<Magazine> magazines = articleController.readArticlesFile("src/main/resources/articles.txt", "src/main/resources/revistes.txt", "src/main/resources/autors.txt");
-            List<Article> articles = articleController.readArticlesFile("src/main/resources/articles.txt", "src/main/resources/autors.txt");
-
-            System.out.println("Revistes llegides des del fitxer");
-            for (int i = 0; i < magazines.size(); i++) {
-              System.out.println(magazines.get(i).toString() + "\n");
-              for (int j = 0; j < magazines.get(i).getArticles().size(); j++) {
-                Author author = magazines.get(i).getArticles().get(j).getAuthor();
-                authorController.addAuthor(author);
-
-                System.out.println("EL AUTOR:");
-                System.out.println(author);
-
-                Article article = magazines.get(i).getArticles().get(j);
-                article.setAuthor(author);
-
-                System.out.println("EL ARTICLE:");
-                System.out.println(article);
-
-                articleController.addArticle(article);
-              }
-
-              magazineController.addMagazine(magazines.get(i));
-            }*/
-
-/*
-          for (Magazine m : magazines) {
-            System.out.println(m);
-            magazineController.addMagazine(m);
-          }
-
-          for (Author a : authors) {
-            authorController.addAuthor(a);
-          }
-
-          for (Article ar : articles) {
-            articleController.addArticle(ar);
-          }
-*/
-          /*} catch (NumberFormatException | IOException e) {
-
-            e.printStackTrace();
-          }*/
-          break;
 
         case 3:
 

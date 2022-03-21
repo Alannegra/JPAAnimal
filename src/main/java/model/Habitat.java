@@ -8,6 +8,9 @@ import java.util.List;
 @Access(AccessType.FIELD)
 @Table(name = "habitat")
 
+/**
+ * Clase Habitat: Se encarga de crear el objeto de la tabla habitat con los distintos datos de cada Habitat en la base de datos.
+ */
 public class Habitat implements Serializable {
 
     @Id
@@ -20,6 +23,11 @@ public class Habitat implements Serializable {
     @Column(name = "description")
     String description;
 
+    /**
+     * Constructor Habitat: Se encarga de construir la clase de cada Habitat.
+     * @param habitat String nombre del habitat
+     * @param description String descripcion del habitat
+     */
     public Habitat(String habitat, String description) {
         //this.habitatId = habitatId;
         this.habitat = habitat;
@@ -53,7 +61,10 @@ public class Habitat implements Serializable {
         this.description = description;
     }
 
-
+    /**
+     * Metodo toString: Se encarga de mostrar por el terminal la lista de habitats de una forma muy visual.
+     * @param result Lista de Habitats para recorrerla.
+     */
     public void toString(List<Habitat> result) {
         System.out.print("| ");
         for (Habitat habitat:result) {

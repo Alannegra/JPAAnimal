@@ -4,6 +4,9 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
+/**
+ * Clase Menu: Se encarga de mostrar por pantalla las distintas opciones del menu.
+ */
 public class Menu {
     private int option;
 
