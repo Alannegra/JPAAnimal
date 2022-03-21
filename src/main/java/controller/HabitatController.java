@@ -20,7 +20,10 @@ public class HabitatController {
 
   private Connection connection;
   private EntityManagerFactory entityManagerFactory;
-
+  /**
+   * Constructor HabitatController: Se encarga de construir la clase.
+   * @param connection Conexión a la base de datos
+   */
   public HabitatController(Connection connection) {
     this.connection = connection;
   }
@@ -87,6 +90,7 @@ public class HabitatController {
 
   /**
    * Metodo deleteHabitat: Se encarga de brindarnos la posibilidad de eliminar por terminal un habitat deseado escribiendo en el terminal el id del habitat conectandose previamente a la base de datos.
+   * @param habitatId Int que indica el id del habitat.
    */
   public void deleteHabitat(Integer habitatId) {
     EntityManager em = entityManagerFactory.createEntityManager();
@@ -100,6 +104,8 @@ public class HabitatController {
   /**
    * Metodo poblarTablaHabitatLeer: Se encarga de poblar la tabla Habitat y mostrar el nombre de los habitats poblados en la base de datos.
    * @param filename String con ruta al archivo .csv
+   * @return habitats
+   * @throws error
    */
   public List<Habitat> poblarTablaHabitatLeer(String filename) throws IOException {
     int num = 0 ;

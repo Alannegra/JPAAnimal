@@ -10,10 +10,15 @@ import java.io.InputStreamReader;
 public class Menu {
     private int option;
 
+    /**
+     * Constructor Menu: Vacio
+     */
     public Menu() {
         super();
     }
-
+    /**
+     * Metodo mainMenu: Se encarga de mostrar por pantalla las distintas opciones del menu.
+     */
     public int mainMenu() {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 

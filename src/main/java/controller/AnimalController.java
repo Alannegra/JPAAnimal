@@ -29,6 +29,10 @@ public class AnimalController {
   private Connection connection;
   private EntityManagerFactory entityManagerFactory;
 
+  /**
+   * Constructor AnimalController: Se encarga de construir la clase.
+   * @param connection Conexión a la base de datos
+   */
   public AnimalController(Connection connection) {
     this.connection = connection;
   }
@@ -165,6 +169,8 @@ public class AnimalController {
   /**
    * Metodo poblarTablaAnimalLeer: Se encarga de poblar la tabla Animal y mostrar el nombre de los animales poblados en la base de datos.
    * @param filename String con ruta al archivo .csv
+   * @return animales
+   * @throws error
    */
   public List<Animal> poblarTablaAnimalLeer(String filename) throws IOException {
     int num = 0 ;

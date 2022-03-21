@@ -40,6 +40,10 @@ public class Main {
     }
   }
 
+  /**
+   * Metodo EntityManagerFactory
+   * @return emf
+   */
   public static EntityManagerFactory createEntityManagerFactory(){
     EntityManagerFactory emf;
     try {

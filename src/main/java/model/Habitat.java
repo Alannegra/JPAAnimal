@@ -11,7 +11,7 @@ import java.util.List;
 /**
  * Clase Habitat: Se encarga de crear el objeto de la tabla habitat con los distintos datos de cada Habitat en la base de datos.
  */
-public class Habitat implements Serializable {
+    public class Habitat implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -33,30 +33,51 @@ public class Habitat implements Serializable {
         this.habitat = habitat;
         this.description = description;
     }
-
+    /**
+     * Constructor Animal: Vació
+     */
     public Habitat() {
     }
-
+    /**
+     * Getter getHabitat
+     * @return habitatId
+     */
     public int getHabitatId() {
         return habitatId;
     }
-
+    /**
+     * Setter setHabitatId
+     * @param habitatId habitatId
+     */
     public void setHabitatId(int habitatId) {
         this.habitatId = habitatId;
     }
 
+    /**
+     * Getter getHabitat
+     * @return habitat
+     */
     public String getHabitat() {
         return habitat;
     }
-
+    /**
+     * Setter setHabitat
+     * @param habitat habitat
+     */
     public void setHabitat(String habitat) {
         this.habitat = habitat;
     }
-
+    /**
+     * Getter getHabitat
+     * @return description
+     */
     public String getDescription() {
         return description;
     }
-
+    /**
+     * Setter setDescription
+     * @param description description
+     */
     public void setDescription(String description) {
         this.description = description;
     }

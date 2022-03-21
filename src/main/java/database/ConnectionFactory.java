@@ -31,11 +31,17 @@ public class ConnectionFactory {
     // init properties object
     private Properties properties;
 
+    /**
+     * ConnectionFactory ConnectionFactory
+     */
     private ConnectionFactory() {
         super();
         init();
     }
-
+    /**
+     * ConnectionFactory getInstance
+     * @return instancia
+     */
     public static ConnectionFactory getInstance() {
         if (instance == null) {
             instance = new ConnectionFactory();
@@ -69,6 +75,9 @@ public class ConnectionFactory {
     }
 
     //	// create properties
+    /**
+     * Properties Properties
+     */
     private Properties getProperties() {
         if (properties == null) {
             properties = new Properties();
@@ -78,7 +87,10 @@ public class ConnectionFactory {
         }
         return properties;
     }
-
+    /**
+     * Connection Connection
+     * @return conexión
+     */
     // connect database
     public Connection connect() {
         if (connection == null) {
@@ -112,16 +124,7 @@ public class ConnectionFactory {
     }
 
     // disconnect database
-    public void disconnect() {
-        if (connection != null) {
-            try {
-                connection.close();
-                connection = null;
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-        }
-    }
+
 
 //	public void init() {
 //		Properties prop = new Properties();
